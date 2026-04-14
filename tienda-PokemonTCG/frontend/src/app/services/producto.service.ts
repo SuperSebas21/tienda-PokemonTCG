@@ -7,8 +7,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProductoService {
-  // Definimos la URL de nuestro servidor Node.js
+  // Definimos la URL de nuestro servidor Node.js para productos
   private apiUrl = 'http://localhost:3000/productos';
+  
+  // Definimos la nueva URL para los mensajes de contacto
+  private contactoUrl = 'http://localhost:3000/contacto';
 
   // Inyectamos HttpClient en el constructor
   constructor(private http: HttpClient) { }
@@ -27,5 +30,11 @@ export class ProductoService {
   // Metodo POST: Agrega una nueva carta a la base de datos
   agregarProducto(producto: any): Observable<any> {
     return this.http.post(this.apiUrl, producto);
+  }
+
+  // Metodo POST: Envia el formulario de contacto al backend
+  // Cumple con el Requerimiento 6.9 y enlaza con el 5.2
+  agregarMensaje(mensaje: any): Observable<any> {
+    return this.http.post(this.contactoUrl, mensaje);
   }
 }

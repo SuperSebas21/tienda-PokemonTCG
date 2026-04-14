@@ -1,1 +1,51 @@
-<p>contacto works!</p>
+<section class="contacto-container">
+    <div class="info-contacto">
+        <h2>¿Tienes dudas sobre una carta o tu pedido?</h2>
+        <p>En **Pokémon TCG Store** estamos para ayudarte. Completa el formulario y nos pondremos en contacto contigo lo antes posible.</p>
+        
+        <div class="detalles">
+            <p><strong>📍 Ubicación:</strong> Ciudad de México, México</p>
+            <p><strong>📧 Correo:</strong> contacto&#64;pokemontcg.mx</p>
+            <p><strong>🕒 Horario:</strong> Lunes a Viernes, 9:00 AM - 6:00 PM</p>
+        </div>
+        
+        <div class="pokemon-decorativo">
+            <img src="https://images.pokemontcg.io/base1/2_hires.png" alt="Blastoise Holografico" class="img-decorativa">
+        </div>
+    </div>
+
+    <div class="formulario-seccion">
+        <h2>Envíanos un mensaje</h2>
+
+        <div *ngIf="enviado" class="alerta exito">
+            <p>¡Tu mensaje ha sido enviado con éxito! Te responderemos pronto.</p>
+        </div>
+        <div *ngIf="errorEnvio" class="alerta error">
+            <p>Hubo un problema al enviar tu mensaje. Por favor, inténtalo de nuevo.</p>
+        </div>
+
+        <form (ngSubmit)="enviarMensaje()" #formContacto="ngForm">
+            <div class="form-group">
+                <label for="nombre">Nombre Completo:</label>
+                <input type="text" id="nombre" [(ngModel)]="nuevoMensaje.nombre" name="nombre" required placeholder="Ej: Diana Valeria Nadia Sebas">
+            </div>
+
+            <div class="form-group">
+                <label for="correo">Correo Electrónico:</label>
+                <input type="email" id="correo" [(ngModel)]="nuevoMensaje.correo" name="correo" required placeholder="ejemplo@correo.com">
+            </div>
+
+            <div class="form-group">
+                <label for="asunto">Asunto:</label>
+                <input type="text" id="asunto" [(ngModel)]="nuevoMensaje.asunto" name="asunto" placeholder="Ej: Duda sobre Charizard VMAX">
+            </div>
+
+            <div class="form-group">
+                <label for="mensaje">Tu Mensaje:</label>
+                <textarea id="mensaje" [(ngModel)]="nuevoMensaje.mensaje" name="mensaje" required rows="5" placeholder="Escribe tu consulta detalladamente..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-enviar" [disabled]="!formContacto.form.valid">Enviar Consulta</button>
+        </form>
+    </div>
+</section>
