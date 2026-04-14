@@ -1,1 +1,27 @@
-<p>detalle works!</p>
+<div class="detalle-container" *ngIf="producto">
+    <div class="detalle-card">
+        <div class="imagen-seccion">
+            <img [src]="producto.imagen" [alt]="producto.nombre">
+        </div>
+        
+        <div class="info-seccion">
+            <h1>{{ producto.nombre }}</h1>
+            <p class="categoria-marca">{{ producto.categoria }} - {{ producto.marca }}</p>
+            
+            <div class="descripcion">
+                <h3>Descripcion:</h3>
+                <p>{{ producto.descripcion }}</p>
+            </div>
+            
+            <p class="precio-detalle">Precio: {{ producto.precio | currency:'MXN' }}</p>
+            <p class="stock">Disponibles: {{ producto.stock }} unidades</p>
+            
+            <button class="btn-compra">Añadir al carrito</button>
+            <a routerLink="/catalogo" class="btn-regresar">Volver al catalogo</a>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!producto" class="error-mensaje">
+    <p>Cargando informacion de la carta...</p>
+</div>
