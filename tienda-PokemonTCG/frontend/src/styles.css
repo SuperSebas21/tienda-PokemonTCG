@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+/* Importamos la fuente 'Poppins' para un look moderno y limpio */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f6f8; /* Gris muy claro para que resalten las cartas blancas */
+    color: #333;
+}
+
+/* Evitamos que el padding altere el tamaño de las cajas en toda la tienda */
+* {
+    box-sizing: border-box;
+}
