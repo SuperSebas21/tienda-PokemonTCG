@@ -14,7 +14,7 @@
       <p class="precio">{{ carta.precio | currency:'MXN' }}</p>
       
       <a [routerLink]="['/productos', carta.id]" class="btn-detalle">Ver Detalle</a>
-      <button class="btn-agregar">Agregar al carrito</button>
+      <button class="btn-agregar" (click)="agregarAlCarrito(carta)">Agregar al carrito</button>
     </div>
   </div>
   

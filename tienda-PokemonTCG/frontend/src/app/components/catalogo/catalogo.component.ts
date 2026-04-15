@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Obligatorio para usar *ngFor y | currency
 import { RouterLink } from '@angular/router'; // Obligatorio para navegar al detalle de la carta
 import { ProductoService } from '../../services/producto.service';
+import { CarritoService } from '../../services/carrito.service';
+
 
 @Component({
   selector: 'app-catalogo',
@@ -14,7 +16,7 @@ export class CatalogoComponent implements OnInit {
   // Arreglo para guardar los datos de MySQL
   cartas: any[] = [];
 
-  constructor(private productoService: ProductoService) {}
+  constructor(private productoService: ProductoService, private carritoService: CarritoService) {}
 
   ngOnInit(): void {
     this.obtenerCartas();
@@ -30,4 +32,10 @@ export class CatalogoComponent implements OnInit {
       }
     });
   }
+
+  agregarAlCarrito(carta: any) {
+    this.carritoService.agregarAlCarrito(carta);
+    alert(`${carta.nombre} fue agregada al carrito.`);
+  }
+
 }
