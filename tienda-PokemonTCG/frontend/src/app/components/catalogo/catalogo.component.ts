@@ -3,12 +3,15 @@ import { CommonModule } from '@angular/common'; // Obligatorio para usar *ngFor 
 import { RouterLink } from '@angular/router'; // Obligatorio para navegar al detalle de la carta
 import { ProductoService } from '../../services/producto.service';
 import { CarritoService } from '../../services/carrito.service';
+import { ProductoCardComponent } from '../producto-card/producto-card.component';
+
 
 
 @Component({
   selector: 'app-catalogo',
+  standalone: true,
   // Aqui inyectamos los modulos que el HTML necesita para funcionar
-  imports: [CommonModule, RouterLink], 
+  imports: [CommonModule, RouterLink, ProductoCardComponent], 
   templateUrl: './catalogo.component.html',
   styleUrl: './catalogo.component.css'
 })
