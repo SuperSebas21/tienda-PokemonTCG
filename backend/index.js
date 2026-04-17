@@ -5,14 +5,9 @@ const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
-// Configuracion de middlewares obligatorios para el funcionamiento de la API
-// CORS permite que el frontend (Angular) se comunique con el servidor sin bloqueos de seguridad
 app.use(cors());
-// Express.json permite que el servidor procese datos en formato JSON enviados en el cuerpo de las peticiones
 app.use(express.json());
 
-// Configuracion de la conexion con el servidor de base de datos MySQL
-// Es indispensable contar con las credenciales correctas para establecer el enlace
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -20,7 +15,6 @@ const db = mysql.createConnection({
     database: 'tienda_pokemon'
 });
 
-// Verificacion del estado de la conexion
 db.connect((err) => {
     if (err) {
         console.error('Error al establecer conexion con MySQL:', err.message);
@@ -29,9 +23,45 @@ db.connect((err) => {
     console.log('Conexion exitosa con MySQL establecida');
 });
 
-// --- ENDPOINTS PARA LA GESTION DE PRODUCTOS (CARTAS POKEMON) ---
+// =====================================================================
+// MIDDLEWARES DE VALIDACIÓN (Punto 7.2 de la rúbrica)
+// =====================================================================
 
-// Endpoint GET: Recupera el listado completo de productos de la base de datos
+// Middleware para validar que los productos tengan datos correctos
+const validarProducto = (req, res, next) => {
+    const { nombre, precio, stock } = req.body;
+    
+    if (!nombre || nombre.trim() === '') {
+        return res.status(400).json({ error: "El nombre de la carta es obligatorio." });
+    }
+    if (precio === undefined || precio <= 0) {
+        return res.status(400).json({ error: "El precio debe ser un número mayor a 0." });
+    }
+    if (stock === undefined || stock < 0) {
+        return res.status(400).json({ error: "El stock no puede ser negativo." });
+    }
+    
+    next(); // Si todo está bien, permite que la petición continúe
+};
+
+// Middleware para validar el formulario de contacto
+const validarContacto = (req, res, next) => {
+    const { nombre, correo, mensaje } = req.body;
+
+    if (!nombre || !correo || !mensaje) {
+        return res.status(400).json({ error: "Nombre, correo y mensaje son campos obligatorios." });
+    }
+    if (!correo.includes('@')) {
+        return res.status(400).json({ error: "El formato del correo no es válido." });
+    }
+
+    next();
+};
+
+// =====================================================================
+// ENDPOINTS PARA LA GESTIÓN DE PRODUCTOS
+// =====================================================================
+
 app.get('/productos', (req, res) => {
     const sql = 'SELECT * FROM productos';
     db.query(sql, (err, results) => {
@@ -40,8 +70,6 @@ app.get('/productos', (req, res) => {
     });
 });
 
-// Endpoint GET: Recupera el detalle de un producto especifico mediante una ruta dinamica
-// Requerimiento tecnico para la visualizacion detallada en el frontend
 app.get('/productos/:id', (req, res) => {
     const { id } = req.params;
     const sql = 'SELECT * FROM productos WHERE id = ?';
@@ -51,15 +79,10 @@ app.get('/productos/:id', (req, res) => {
     });
 });
 
-// Endpoint POST: Permite el registro de nuevos productos en el sistema
-app.post('/productos', (req, res) => {
+// Aquí inyectamos el middleware 'validarProducto'
+app.post('/productos', validarProducto, (req, res) => {
     const { nombre, categoria, marca, precio, stock, imagen, descripcion } = req.body;
     
-    // Implementacion de middleware de validacion basica para asegurar la integridad de los datos
-    if (!nombre || !precio || !stock) {
-        return res.status(400).json({ error: "Faltan datos obligatorios (Nombre, Precio o Stock)" });
-    }
-
     const sql = 'INSERT INTO productos (nombre, categoria, marca, precio, stock, imagen, descripcion) VALUES (?, ?, ?, ?, ?, ?, ?)';
     db.query(sql, [nombre, categoria, marca, precio, stock, imagen, descripcion], (err, result) => {
         if (err) return res.status(500).send(err);
@@ -67,10 +90,12 @@ app.post('/productos', (req, res) => {
     });
 });
 
-// --- ENDPOINT PARA LA GESTION DE CONTACTO ---
+// =====================================================================
+// ENDPOINT PARA LA GESTIÓN DE CONTACTO
+// =====================================================================
 
-// Endpoint POST: Almacena los datos enviados desde el formulario de contacto del frontend
-app.post('/contacto', (req, res) => {
+// Aquí inyectamos el middleware 'validarContacto'
+app.post('/contacto', validarContacto, (req, res) => {
     const { nombre, correo, asunto, mensaje } = req.body;
     const sql = 'INSERT INTO mensajes (nombre, correo, asunto, mensaje) VALUES (?, ?, ?, ?)';
     db.query(sql, [nombre, correo, asunto, mensaje], (err, result) => {
@@ -79,7 +104,6 @@ app.post('/contacto', (req, res) => {
     });
 });
 
-// Inicializacion del servicio en el puerto configurado
 app.listen(PORT, () => {
     console.log(`Servidor de la tienda corriendo en: http://localhost:${PORT}`);
 });
