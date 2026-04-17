@@ -1,17 +1,22 @@
-<app-producto-card 
-    *ngFor="let carta of cartas" 
-    [carta]="carta" 
-    (agregar)="agregarAlCarrito($event)">
-</app-producto-card>
-
-  <h3>{{ carta.nombre }}</h3>
-  <p class="marca">Expansión: {{ carta.marca }}</p>
-  <p class="precio">{{ carta.precio | currency:'MXN' }}</p>
+<div class="card-producto">
+  <div class="imagen-wrapper">
+    <img [src]="item.imagen" [alt]="item.nombre" class="img-carta">
+  </div>
   
-  <p [ngClass]="{'stock-bajo': carta.stock < 5, 'stock-ok': carta.stock >= 5}">
-    Disponibles: {{ carta.stock }}
+  <h3>{{ item.nombre }}</h3>
+  <p class="marca">Expansión: {{ item.marca }}</p>
+  
+  <p class="precio">{{ item.precio | currency:'MXN' }}</p>
+
+  <p class="stock-info">
+    Stock: 
+    <span [ngClass]="{ 'stock-critico': item.stock < 5, 'stock-disponible': item.stock >= 5 }">
+      {{ item.stock }} unidades
+    </span>
   </p>
   
-  <a [routerLink]="['/productos', carta.id]" class="btn-detalle">Ver Detalle</a>
-  <button class="btn-agregar" (click)="onAgregarClick()">Agregar al carrito</button>
+  <div class="acciones">
+    <a [routerLink]="['/productos', item.id]" class="btn-detalle">Ver Detalle</a>
+    <button class="btn-agregar" (click)="alAgregarAlCarrito()">Agregar al carrito</button>
+  </div>
 </div>

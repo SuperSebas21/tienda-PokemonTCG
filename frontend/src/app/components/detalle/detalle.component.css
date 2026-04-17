@@ -48,6 +48,24 @@
     margin: 20px 0;
 }
 
+.stock {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+/* --- ESTILOS DINÁMICOS DEL STOCK --- */
+.stock-critico {
+    color: #d62828; /* Rojo */
+    font-weight: bold;
+}
+
+.stock-disponible {
+    color: #2b9348; /* Verde */
+    font-weight: bold;
+}
+/* ------------------------------------ */
+
 .btn-compra {
     background-color: #1d3557;
     color: white;
@@ -66,4 +84,10 @@
     color: #457b9d;
     text-decoration: none;
     margin-top: 15px;
+}
+
+.error-mensaje {
+    text-align: center;
+    padding: 50px;
+    color: #666;
 }

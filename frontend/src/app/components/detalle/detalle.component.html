@@ -14,7 +14,13 @@
             </div>
             
             <p class="precio-detalle">Precio: {{ producto.precio | currency:'MXN' }}</p>
-            <p class="stock">Disponibles: {{ producto.stock }} unidades</p>
+            
+            <p class="stock">
+                Disponibles: 
+                <span [ngClass]="{ 'stock-critico': producto.stock < 5, 'stock-disponible': producto.stock >= 5 }">
+                    {{ producto.stock }} unidades
+                </span>
+            </p>
             
             <button class="btn-compra">Añadir al carrito</button>
             <a routerLink="/catalogo" class="btn-regresar">Volver al catalogo</a>

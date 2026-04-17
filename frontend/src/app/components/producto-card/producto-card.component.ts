@@ -1,5 +1,4 @@
-// Importamos Input y Output
-import { Component, Input, Output, EventEmitter } from '@angular/core'; 
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -11,13 +10,13 @@ import { RouterLink } from '@angular/router';
   styleUrl: './producto-card.component.css'
 })
 export class ProductoCardComponent {
-  // Recibe la info de la carta desde el catalogo (Punto 6.3)
-  @Input() carta: any; 
-  
-  // Envia una señal al catalogo cuando se hace clic en agregar (Punto 6.3 Extra)
+  // Recibe la información del catálogo padre
+  @Input() item: any; 
+
+  // Envía un aviso al catálogo padre cuando le dan clic al botón
   @Output() agregar = new EventEmitter<any>();
 
-  onAgregarClick() {
-    this.agregar.emit(this.carta);
+  alAgregarAlCarrito() {
+    this.agregar.emit(this.item);
   }
 }
