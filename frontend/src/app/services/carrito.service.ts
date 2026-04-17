@@ -1,40 +1,49 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarritoService {
-  // Arreglo para almacenar las cartas seleccionadas
-  private items: any[] = [];
+  // 1. Reemplazamos el arreglo normal por una Signal (Punto 6.8 de la rúbrica)
+  private itemsSignal = signal<any[]>([]);
 
   constructor() { }
 
-  // Añade un producto o incrementa su cantidad si ya existe
-  agregarAlCarrito(producto: any) {
-    const itemExistente = this.items.find(item => item.id === producto.id);
-    if (itemExistente) {
-      itemExistente.cantidad += 1;
-    } else {
-      // Agregamos la propiedad 'cantidad' al objeto
-      this.items.push({ ...producto, cantidad: 1 });
-    }
+  // Exponemos el carrito como "Solo Lectura" por seguridad
+  get carrito() {
+    return this.itemsSignal.asReadonly();
   }
 
-  obtenerCarrito() {
-    return this.items;
+  // 2. Usamos 'computed' para que el total se recalcule automáticamente
+  // cada vez que la signal principal (itemsSignal) cambie.
+  total = computed(() => {
+    return this.itemsSignal().reduce((suma, item) => suma + (item.precio * item.cantidad), 0);
+  });
+
+  // Añade un producto o incrementa su cantidad de forma inmutable
+  agregarAlCarrito(producto: any) {
+    this.itemsSignal.update(items => {
+      const itemExistente = items.find(item => item.id === producto.id);
+      
+      if (itemExistente) {
+        // Mapeamos el arreglo para actualizar solo la cantidad del item correcto
+        return items.map(item => 
+          item.id === producto.id ? { ...item, cantidad: item.cantidad + 1 } : item
+        );
+      } else {
+        // Si no existe, lo agregamos al final con cantidad 1
+        return [...items, { ...producto, cantidad: 1 }];
+      }
+    });
   }
 
   eliminarItem(id: number) {
-    this.items = this.items.filter(item => item.id !== id);
+    // Filtramos el arreglo para quitar el producto
+    this.itemsSignal.update(items => items.filter(item => item.id !== id));
   }
 
   vaciarCarrito() {
-    this.items = [];
-    return this.items;
-  }
-
-  // Calcula el total a pagar iterando sobre los items
-  calcularTotal(): number {
-    return this.items.reduce((total, item) => total + (item.precio * item.cantidad), 0);
+    // .set() reemplaza todo el valor de la signal por uno nuevo
+    this.itemsSignal.set([]);
   }
 }

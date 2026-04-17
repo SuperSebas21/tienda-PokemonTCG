@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject } from '@angular/core'; // 1. Importamos inject
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CarritoService } from '../../services/carrito.service';
@@ -10,31 +10,22 @@ import { CarritoService } from '../../services/carrito.service';
   templateUrl: './carrito.component.html',
   styleUrl: './carrito.component.css'
 })
-export class CarritoComponent implements OnInit {
-  itemsCarrito: any[] = [];
-  total: number = 0;
+export class CarritoComponent {
+  // 2. Usamos inject() en lugar del constructor. ¡Esto soluciona el error!
+  private carritoService = inject(CarritoService);
 
-  constructor(private carritoService: CarritoService) {}
-
-  ngOnInit(): void {
-    this.actualizarCarrito();
-  }
-
-  actualizarCarrito() {
-    this.itemsCarrito = this.carritoService.obtenerCarrito();
-    this.total = this.carritoService.calcularTotal();
-  }
+  // 3. Ahora sí podemos conectar las Signals sin problemas
+  itemsCarrito = this.carritoService.carrito;
+  total = this.carritoService.total;
 
   eliminarCarta(id: number) {
     this.carritoService.eliminarItem(id);
-    this.actualizarCarrito();
   }
 
   procesarCompra() {
-    if (this.itemsCarrito.length > 0) {
+    if (this.itemsCarrito().length > 0) {
       alert('¡Compra realizada con éxito! Preparando tus cartas para el envío.');
       this.carritoService.vaciarCarrito();
-      this.actualizarCarrito();
     }
   }
 }
