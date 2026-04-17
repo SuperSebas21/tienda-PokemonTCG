@@ -1,0 +1,130 @@
+.page-container {
+    background-color: #f8f9fa;
+    padding: 60px 20px;
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.main-card {
+    background: white;
+    max-width: 1100px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+/* Estilo Columna Izquierda */
+.info-column {
+    padding: 45px;
+    border-right: 1px solid #eee;
+}
+
+.info-column h2 {
+    color: #002b5c;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.info-column p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.contact-details p {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+}
+
+.image-wrapper {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.pokemon-card {
+    max-width: 250px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+
+.pokemon-card:hover {
+    transform: translateY(-10px) rotate(2deg);
+}
+
+/* Estilo Columna Derecha */
+.form-column {
+    padding: 45px;
+}
+
+.form-column h3 {
+    color: #002b5c;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+input, select, textarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #ef4444;
+}
+
+/* Botón idéntico al de tu captura */
+.btn-submit {
+    width: 100%;
+    padding: 15px;
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-submit:disabled {
+    background-color: #b0b0b0; /* Gris como en tu imagen */
+    cursor: not-allowed;
+}
+
+/* Responsivo para tablets */
+@media (max-width: 900px) {
+    .main-card {
+        grid-template-columns: 1fr;
+    }
+    .info-column {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+    }
+}

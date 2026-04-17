@@ -1,0 +1,24 @@
+<section class="catalogo-container">
+  <h2>Catálogo de Cartas Pokémon</h2>
+
+  <div class="grid-productos">
+    <div *ngFor="let carta of cartas" class="card-producto">
+      
+      <div class="imagen-wrapper">
+        <img [src]="carta.imagen" [alt]="carta.nombre" class="img-carta">
+      </div>
+      
+      <h3>{{ carta.nombre }}</h3>
+      <p class="marca">Expansión: {{ carta.marca }}</p>
+      
+      <p class="precio">{{ carta.precio | currency:'MXN' }}</p>
+      
+      <a [routerLink]="['/productos', carta.id]" class="btn-detalle">Ver Detalle</a>
+      <button class="btn-agregar" (click)="agregarAlCarrito(carta)">Agregar al carrito</button>
+    </div>
+  </div>
+  
+  <div *ngIf="cartas.length === 0" class="mensaje-vacio">
+    <p>Cargando cartas desde el servidor o inventario vacío...</p>
+  </div>
+</section>

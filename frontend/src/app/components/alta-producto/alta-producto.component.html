@@ -1,0 +1,71 @@
+<div class="page-container">
+  <div class="main-card">
+    
+    <div class="info-column">
+      <h2>Registrar Nueva Carta</h2>
+      <p>En <strong>Pokémon TCG Store</strong> mantenemos nuestro inventario al día. Completa el formulario para añadir un nuevo ejemplar a la Pokédex de la tienda.</p>
+
+      <div class="contact-details">
+        <p>📍 <strong>Ubicación:</strong> Base de Datos MySQL</p>
+        <p>📋 <strong>Estado:</strong> Registro de Inventario</p>
+        <p>🕒 <strong>Fecha:</strong> {{ today | date:'longDate' }}</p>
+      </div>
+
+      <div class="image-wrapper">
+        <img src="https://images.pokemontcg.io/base1/4_hires.png" alt="Charizard Holographic" class="pokemon-card">
+      </div>
+    </div>
+
+    <div class="form-column">
+      <h3>Ingresa los datos</h3>
+      
+      <form [formGroup]="formProducto" (ngSubmit)="enviarDatos()">
+        <div class="input-group">
+          <label>Nombre de la Carta:</label>
+          <input type="text" formControlName="nombre" placeholder="Ej: Charizard VMAX">
+        </div>
+
+        <div class="row">
+          <div class="input-group">
+            <label>Categoría:</label>
+            <select formControlName="categoria">
+              <option value="Pokémon">Pokémon</option>
+              <option value="Entrenador">Entrenador</option>
+              <option value="Energía">Energía</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Expansión:</label>
+            <input type="text" formControlName="marca" placeholder="Ej: Base Set">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-group">
+            <label>Precio (MXN):</label>
+            <input type="number" formControlName="precio" placeholder="0.00">
+          </div>
+          <div class="input-group">
+            <label>Stock:</label>
+            <input type="number" formControlName="stock" placeholder="Cantidad">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>URL de Imagen:</label>
+          <input type="text" formControlName="imagen" placeholder="https://...">
+        </div>
+
+        <div class="input-group">
+          <label>Descripción:</label>
+          <textarea formControlName="descripcion" rows="3" placeholder="Detalles de la carta..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit" [disabled]="formProducto.invalid">
+          Registrar Producto
+        </button>
+      </form>
+    </div>
+
+  </div>
+</div>

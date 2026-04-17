@@ -1,0 +1,210 @@
+.carrito-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header-carrito {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header-carrito h2 {
+    color: #1d3557;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.contenido-carrito {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.lista-items {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Diseño de cada carta en el carrito */
+.item-card {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    border-left: 5px solid #e63946;
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.item-card:hover {
+    transform: translateX(5px);
+}
+
+.item-img {
+    width: 80px;
+    height: auto;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.item-info {
+    flex: 1;
+}
+
+.item-info h3 {
+    margin: 0 0 5px 0;
+    color: #333;
+}
+
+.marca {
+    color: #888;
+    font-size: 0.9rem;
+    margin: 0 0 5px 0;
+}
+
+.precio {
+    font-weight: bold;
+    color: #457b9d;
+    margin: 0;
+}
+
+.item-controles {
+    text-align: right;
+    margin-right: 30px;
+}
+
+.subtotal {
+    font-weight: bold;
+    color: #e63946;
+    font-size: 1.1rem;
+}
+
+.btn-eliminar {
+    background: #ff4d4f;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    transition: background 0.2s;
+}
+
+.btn-eliminar:hover {
+    background: #d9363e;
+}
+
+/* Panel de cobro */
+.resumen-pago {
+    flex: 1;
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 20px;
+}
+
+.resumen-pago h3 {
+    color: #1d3557;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.desglose p {
+    display: flex;
+    justify-content: space-between;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.total-final {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #e0e0e0;
+}
+
+.total-final h2 {
+    color: #e63946;
+    margin: 0;
+}
+
+.btn-comprar {
+    width: 100%;
+    background-color: #1d3557;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-top: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-comprar:hover {
+    background-color: #457b9d;
+}
+
+.btn-seguir {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #457b9d;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Diseño para cuando esta vacio */
+.carrito-vacio {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.img-vacio {
+    width: 150px;
+    opacity: 0.7;
+    margin-bottom: 20px;
+}
+
+.btn-catalogo {
+    display: inline-block;
+    background-color: #e63946;
+    color: white;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: transform 0.2s;
+}
+
+.btn-catalogo:hover {
+    transform: scale(1.05);
+}
+
+/* Responsividad */
+@media (max-width: 900px) {
+    .contenido-carrito {
+        flex-direction: column;
+    }
+    .resumen-pago {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

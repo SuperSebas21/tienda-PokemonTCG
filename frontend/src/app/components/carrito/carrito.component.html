@@ -1,0 +1,48 @@
+<section class="carrito-container">
+  <div class="header-carrito">
+    <h2>Tu Mochila de Entrenador 🎒</h2>
+    <p>Revisa las cartas de tu pedido antes de finalizar la compra.</p>
+  </div>
+
+  <div class="contenido-carrito" *ngIf="itemsCarrito.length > 0">
+    <div class="lista-items">
+      <div class="item-card" *ngFor="let item of itemsCarrito">
+        <img [src]="item.imagen" [alt]="item.nombre" class="item-img">
+        
+        <div class="item-info">
+          <h3>{{ item.nombre }}</h3>
+          <p class="marca">{{ item.marca }}</p>
+          <p class="precio">{{ item.precio | currency:'MXN' }} c/u</p>
+        </div>
+        
+        <div class="item-controles">
+          <p class="cantidad">Cantidad: <strong>{{ item.cantidad }}</strong></p>
+          <p class="subtotal">Subtotal: {{ (item.precio * item.cantidad) | currency:'MXN' }}</p>
+        </div>
+
+        <button class="btn-eliminar" (click)="eliminarCarta(item.id)">X</button>
+      </div>
+    </div>
+
+    <div class="resumen-pago">
+      <h3>Resumen del Pedido</h3>
+      <div class="desglose">
+        <p>Total de cartas: <span>{{ itemsCarrito.length }}</span></p>
+        <p>Envío: <span>¡Gratis!</span></p>
+      </div>
+      <div class="total-final">
+        <p>Total a Pagar:</p>
+        <h2>{{ total | currency:'MXN' }}</h2>
+      </div>
+      <button class="btn-comprar" (click)="procesarCompra()">Finalizar Compra</button>
+      <a routerLink="/catalogo" class="btn-seguir">Seguir buscando cartas</a>
+    </div>
+  </div>
+
+  <div class="carrito-vacio" *ngIf="itemsCarrito.length === 0">
+    <img src="https://images.pokemontcg.io/base1/58_hires.png" alt="Pikachu triste" class="img-vacio">
+    <h3>Tu mochila está vacía</h3>
+    <p>Aún no has agregado ninguna carta a tu pedido.</p>
+    <a routerLink="/catalogo" class="btn-catalogo">Ir al Catálogo</a>
+  </div>
+</section>
