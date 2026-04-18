@@ -7,17 +7,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProductoService {
-  // Definimos la URL de nuestro servidor Node.js para productos
-  private apiUrl = 'http://localhost:3000/productos';
+  // URL de producción en Render (ya no es localhost)
+  private apiUrl = 'https://pokemon-tcg-api-m1lc.onrender.com/productos';
   
-  // Definimos la nueva URL para los mensajes de contacto
-  private contactoUrl = 'http://localhost:3000/contacto';
+  // URL de contacto en producción
+  private contactoUrl = 'https://pokemon-tcg-api-m1lc.onrender.com/contacto';
 
   // Inyectamos HttpClient en el constructor
   constructor(private http: HttpClient) { }
 
   // Metodo GET: Obtiene la lista completa de cartas
-  // Retorna un Observable como pide el requerimiento 6.9
   getProductos(): Observable<any> {
     return this.http.get(this.apiUrl);
   }
@@ -33,7 +32,6 @@ export class ProductoService {
   }
 
   // Metodo POST: Envia el formulario de contacto al backend
-  // Cumple con el Requerimiento 6.9 y enlaza con el 5.2
   agregarMensaje(mensaje: any): Observable<any> {
     return this.http.post(this.contactoUrl, mensaje);
   }
