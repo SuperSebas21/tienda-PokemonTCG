@@ -11,7 +11,7 @@ app.use(express.json());
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '12345678', // Reemplazar con la contraseña definida en Workbench
+    password: 'AH040901p', // Reemplazar con la contraseña definida en Workbench
     database: 'tienda_pokemon'
 });
 
