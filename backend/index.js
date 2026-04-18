@@ -3,11 +3,15 @@ const mysql = require('mysql2');
 const cors = require('cors');
 
 const app = express();
+// El puerto dinámico es vital para Render
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
+// =====================================================================
+// CONFIGURACIÓN DE BASE DE DATOS (NUBE - AIVEN)
+// =====================================================================
 const db = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -15,7 +19,7 @@ const db = mysql.createConnection({
     database: process.env.DB_NAME,
     port: process.env.DB_PORT,
     ssl: {
-        rejectUnauthorized: false
+        rejectUnauthorized: false // Pase VIP para Aiven
     }
 });
 
@@ -27,6 +31,9 @@ db.connect((err) => {
     console.log('¡Conexión exitosa con MySQL en Aiven establecida!');
 });
 
+// =====================================================================
+// MIDDLEWARES DE VALIDACIÓN
+// =====================================================================
 const validarProducto = (req, res, next) => {
     const { nombre, precio, stock } = req.body;
     if (!nombre || nombre.trim() === '') return res.status(400).json({ error: "El nombre es obligatorio." });
@@ -42,6 +49,9 @@ const validarContacto = (req, res, next) => {
     next();
 };
 
+// =====================================================================
+// ENDPOINTS
+// =====================================================================
 app.get('/productos', (req, res) => {
     const sql = 'SELECT * FROM productos';
     db.query(sql, (err, results) => {
