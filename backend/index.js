@@ -3,13 +3,11 @@ const mysql = require('mysql2');
 const cors = require('cors');
 
 const app = express();
-// Render asigna un puerto automático, por eso usamos process.env.PORT
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
-// CONFIGURACIÓN PARA LA NUBE (Aiven + Render)
 const db = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -17,7 +15,7 @@ const db = mysql.createConnection({
     database: process.env.DB_NAME,
     port: process.env.DB_PORT,
     ssl: {
-        rejectUnauthorized: false // REQUERIDO para conectar con Aiven
+        rejectUnauthorized: false
     }
 });
 
@@ -28,10 +26,6 @@ db.connect((err) => {
     }
     console.log('¡Conexión exitosa con MySQL en Aiven establecida!');
 });
-
-// =====================================================================
-// MIDDLEWARES DE VALIDACIÓN
-// =====================================================================
 
 const validarProducto = (req, res, next) => {
     const { nombre, precio, stock } = req.body;
@@ -47,10 +41,6 @@ const validarContacto = (req, res, next) => {
     if (!correo.includes('@')) return res.status(400).json({ error: "Correo no válido." });
     next();
 };
-
-// =====================================================================
-// ENDPOINTS
-// =====================================================================
 
 app.get('/productos', (req, res) => {
     const sql = 'SELECT * FROM productos';
